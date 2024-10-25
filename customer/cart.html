@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Cart</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+
+        <div class="cart-item">
+            <p><strong>Product:</strong> Apple</p>
+            <p><strong>Price:</strong> $2.00</p>
+            <label for="quantity-1">Quantity:</label>
+            <input type="number" id="quantity-1" value="3" min="1">
+            <button onclick="removeItem(1)">Remove</button>
+        </div>
+
+        <div class="cart-item">
+            <p><strong>Product:</strong> Banana</p>
+            <p><strong>Price:</strong> $1.50</p>
+            <label for="quantity-2">Quantity:</label>
+            <input type="number" id="quantity-2" value="2" min="1">
+            <button onclick="removeItem(2)">Remove</button>
+        </div>
+
+        <!-- Additional cart items can be added here -->
+
+        <div class="cart-summary">
+            <p><strong>Total:</strong> $9.00</p>
+            <button onclick="placeOrder()">Place Order</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

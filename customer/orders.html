@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Orders</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="orders-container">
+        <h2>Your Orders</h2>
+
+        <div class="order">
+            <p><strong>Order #123</strong></p>
+            <p><strong>Status:</strong> Confirmed</p>
+            <p><strong>Items:</strong> 3 x Apples, 2 x Bananas</p>
+            <p><strong>Total Price:</strong> $9.00</p>
+            <button disabled>Cancel Order</button> <!-- Disabled if order is confirmed -->
+        </div>
+
+        <div class="order">
+            <p><strong>Order #124</strong></p>
+            <p><strong>Status:</strong> Pending</p>
+            <p><strong>Items:</strong> 1 x Laptop, 1 x Mouse</p>
+            <p><strong>Total Price:</strong> $1000.00</p>
+            <button onclick="cancelOrder(124)">Cancel Order</button>
+        </div>
+
+        <!-- Additional orders can be added here -->
+        
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

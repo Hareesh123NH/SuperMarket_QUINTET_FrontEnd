@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Orders</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="orders-container">
+        <h2>Pending Orders</h2>
+        <div class="order">
+            <p>Order #123</p>
+            <button onclick="approveOrder(123)">Approve</button>
+            <button onclick="rejectOrder(123)">Reject</button>
+        </div>
+        <!-- Additional orders go here -->
+    </div>
+
+    <script>
+        function approveOrder(orderId) {
+            alert('Order ' + orderId + ' approved');
+        }
+        function rejectOrder(orderId) {
+            alert('Order ' + orderId + ' rejected');
+        }
+    </script>
+</body>
+</html>

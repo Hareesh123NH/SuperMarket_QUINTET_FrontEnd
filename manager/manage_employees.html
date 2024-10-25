@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Manage Employees</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Employees</h2>
+
+        <div class="add-employee">
+            <h3>Add New Employee</h3>
+            <form id="addEmployeeForm">
+                <input type="text" id="employeeName" placeholder="Full Name" required>
+                <input type="email" id="employeeEmail" placeholder="Email" required>
+                <button type="submit">Add Employee</button>
+            </form>
+            <p id="add-message" class="success"></p>
+        </div>
+
+        <h3>Existing Employees</h3>
+        <table id="employeesTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example entry -->
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td><button class="remove-btn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
