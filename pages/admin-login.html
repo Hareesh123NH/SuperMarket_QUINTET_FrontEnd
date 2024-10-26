@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .admin-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const role = document.querySelector('select').value;
+
+            // Redirect based on the role selected
+            if (role === 'clerk') {
+                window.location.href = 'clerk-dashboard.html';
+            } else if (role === 'employee') {
+                window.location.href = 'employee-dashboard.html';
+            } else if (role === 'manager') {
+                window.location.href = 'manager-dashboard.html';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="admin-container">
+        <h2>Admin Login</h2>
+        <form onsubmit="handleAdminLogin(event)">
+            <select required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="clerk">Clerk</option>
+                <option value="employee">Employee</option>
+                <option value="manager">Manager</option>
+            </select>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>
