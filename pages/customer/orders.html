@@ -4,32 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Orders</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../css/orders.css">
 </head>
 <body>
     <div class="orders-container">
         <h2>Your Orders</h2>
 
-        <div class="order">
-            <p><strong>Order #123</strong></p>
-            <p><strong>Status:</strong> Confirmed</p>
-            <p><strong>Items:</strong> 3 x Apples, 2 x Bananas</p>
-            <p><strong>Total Price:</strong> $9.00</p>
-            <button disabled>Cancel Order</button> <!-- Disabled if order is confirmed -->
+        <!-- Search bar -->
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for products..." oninput="searchOrder()">
         </div>
 
-        <div class="order">
-            <p><strong>Order #124</strong></p>
-            <p><strong>Status:</strong> Pending</p>
-            <p><strong>Items:</strong> 1 x Laptop, 1 x Mouse</p>
-            <p><strong>Total Price:</strong> $1000.00</p>
-            <button onclick="cancelOrder(124)">Cancel Order</button>
+        <!-- Orders Table -->
+        <div class="orders-table-wrapper">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                    <!-- Sample orders -->
+                    <tr id="order-123">
+                        <td>123</td>
+                        <td>Apples</td>
+                        <td>3</td>
+                        <td>$6.00</td>
+                        <td>Confirmed</td>
+                        <td><button class="cancel-button" disabled>Cancel Order</button></td>
+                    </tr>
+                    <tr id="order-124">
+                        <td>124</td>
+                        <td>Laptop</td>
+                        <td>1</td>
+                        <td>$1000.00</td>
+                        <td>Pending</td>
+                        <td><button class="cancel-button" onclick="cancelOrder(124)">Cancel Order</button></td>
+                    </tr>
+                    <tr id="order-125">
+                        <td>125</td>
+                        <td>Headphones</td>
+                        <td>2</td>
+                        <td>$50.00</td>
+                        <td>Pending</td>
+                        <td><button class="cancel-button" onclick="cancelOrder(125)">Cancel Order</button></td>
+                    </tr>
+                    <tr id="order-126">
+                        <td>126</td>
+                        <td>Oranges</td>
+                        <td>4</td>
+                        <td>$8.00</td>
+                        <td>Confirmed</td>
+                        <td><button class="cancel-button" disabled>Cancel Order</button></td>
+                    </tr>
+                    <tr id="order-127">
+                        <td>127</td>
+                        <td>Keyboard</td>
+                        <td>1</td>
+                        <td>$30.00</td>
+                        <td>Pending</td>
+                        <td><button class="cancel-button" onclick="cancelOrder(127)">Cancel Order</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <!-- Additional orders can be added here -->
-        
     </div>
 
-    <script src="../script.js"></script>
+    <script src="../../js/orders.js"></script>
 </body>
 </html>

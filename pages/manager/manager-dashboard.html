@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/manager.css">
+    <link rel="stylesheet" href="../../css/manager_clerk.css">
+    <link rel="stylesheet" href="../../css/manager_employee.css">
+    <title>Manager Dashboard</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2 class="centered">Manager Dashboard</h2>
+
+        <div class="button-container">
+            <button class="button-employee"  onclick="showSection('employees')">Manage Employees</button>
+            <button class="button-clerk" onclick="showSection('clerks')">Manage Clerks</button>
+            <button class="button-products" onclick="showSection('products')">View Products</button>
+        </div>
+
+        <div class="data-container">
+            <p class="data-info">Welcome to the Manager Dashboard! Select an option above to manage your resources.</p>
+        </div>
+
+    </div>
+     <!-- Sections for each button -->
+     <div id="employees" class="data-section">
+        <!-- <h3>Manage Employees</h3>
+        <p>Here, you can add, remove, or update employee details.</p> -->
+        <!-- Employee management content goes here -->
+        <div class="container">
+            <h2 class="centered">Manage Employees</h2>
+    
+            <div class="add-employee" style="display: none;">
+                <h3>Add New Employee</h3>
+                <form id="addEmployeeForm" onsubmit="addEmployee(event)">
+                    <input type="text" id="employeeName" placeholder="Full Name" required>
+                    <input type="email" id="employeeEmail" placeholder="Email" required>
+                    <button type="submit">Add Employee</button>
+                </form>
+                <p id="add-message" class="success"></p>
+            </div>
+    
+            <h3>Existing Employees</h3>
+            <table id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Random employee data will be populated here -->
+                </tbody>
+            </table>
+            <button onclick="toggleAddEmployee()">Add Employee</button>
+        </div>
+    
+       
+    </div>
+
+    <div id="clerks" class="data-section">
+        <!-- <h3>Manage Clerks</h3>
+        <p>Here, you can add, remove, or update clerk details.</p> -->
+        <!-- Clerk management content goes here -->
+        <div class="container">
+            <h2 class="centered">Manage Clerks</h2>
+    
+            <div class="add-clerk" style="display: none;">
+                <h3>Add New Clerk</h3>
+                <form id="addClerkForm" onsubmit="addClerk(event)">
+                    <input type="text" id="clerkName" placeholder="Full Name" required>
+                    <input type="email" id="clerkEmail" placeholder="Email" required>
+                    <button type="submit">Add Clerk</button>
+                </form>
+                <p id="add-message" class="success"></p>
+            </div>
+    
+            <h3>Existing Clerks</h3>
+            <table id="clerksTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Random clerk data will be populated here -->
+                </tbody>
+            </table>
+            <button onclick="toggleAddClerk()">Add Clerk</button>
+        </div>
+    </div>
+
+    <div id="products" class="data-section">
+        <h3>View Products</h3>
+        <p>Here, you can view all available products in the system.</p>
+        <!-- Product viewing content goes here -->
+    </div>
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.data-section').forEach(section => section.style.display = 'none');
+
+            // Show the selected section
+            document.getElementById(sectionId).style.display = 'block';
+        }
+    </script>
+     <script src="../../js/manager_employee.js"></script>
+     <script src="../../js/manager_clerk.js"></script>
+</body>
+</html>

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../css/manager_clerk.css">
     <title>Manage Clerks</title>
 </head>
 <body>
     <div class="container">
-        <h2>Manage Clerks</h2>
+        <h2 class="centered">Manage Clerks</h2>
 
-        <div class="add-clerk">
+        <div class="add-clerk" style="display: none;">
             <h3>Add New Clerk</h3>
-            <form id="addClerkForm">
+            <form id="addClerkForm" onsubmit="addClerk(event)">
                 <input type="text" id="clerkName" placeholder="Full Name" required>
                 <input type="email" id="clerkEmail" placeholder="Email" required>
                 <button type="submit">Add Clerk</button>
@@ -30,16 +30,12 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Example entry -->
-                <tr>
-                    <td>John Doe</td>
-                    <td>john@example.com</td>
-                    <td><button class="remove-btn">Remove</button></td>
-                </tr>
+                <!-- Random clerk data will be populated here -->
             </tbody>
         </table>
+        <button onclick="toggleAddClerk()">Add Clerk</button>
     </div>
 
-    <script src="../script.js"></script>
+    <script src="../../js/manager_clerk.js"></script>
 </body>
 </html>
