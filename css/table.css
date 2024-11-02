@@ -1,7 +1,37 @@
 .tablediv{
     margin: 80px;
+    background-color: aliceblue;
 }
 .tablediv .err{
     align-content: center;
     text-align: center;
+}
+.table-container {
+    max-height: 400px; /* Set your desired height */
+    overflow-y: auto;
+    position: relative;
+}
+.move{
+    max-width: 100ch;
+}
+.table {
+    width: 85vw;
+    border-collapse: collapse;
+}
+
+.table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; 
+    z-index: 1; 
+}
+.adjust{
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+    margin-right: 15px;
+}
+
+.hiddenForm{
+    display: none;
 }

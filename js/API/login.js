@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded",function() {
                     case "ROLE_USER":window.location.href = 'http://127.0.0.1:5500/pages/customer/customer-dash.html';break;
                     case "ROLE_EMPLOYEE":window.location.href = 'http://127.0.0.1:5500/pages/employee/update_inventory.html';break;
                     case "ROLE_CLERK":window.location.href = 'http://127.0.0.1:5500/pages/clerk/clerk-dash.html';break;
-                    case "ROLE_MANAGER":window.location.href = 'http://127.0.0.1:5500/pages/manager/admin-dashboard.html';break;
+                    case "ROLE_MANAGER":window.location.href = 'http://127.0.0.1:5500/pages/manager/manager-dash.html';break;
                 }
             } 
             else {
