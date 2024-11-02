@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clerk DashBoard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/table.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="bg-primary text-white text-center p-3" style="position: sticky; top: 0; z-index: 1000;">
+        <h1 id="name"> Welcome Clerk</h1>
+        <p>You can perform your oprations</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 120px;">
+        <div class="container">
+            <a class="navbar-brand" href="#">Supermarket</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- <li class="nav-item"><a class="nav-link" href="#about">About</a></li> -->
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">All Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Pending Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Approved Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Canceled Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Bills</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tablediv">
+        
+      </div>
+      <h2 style="display: none; color: rgb(62, 63, 65); font-style: italic;" id="not" class="tablediv err">No Data Found</h2>
+      <!-- Embed the page in an iframe -->
+    <iframe id="otherPage" style="display: none;" src="clerk.html"></iframe>
+
+    <script src="../../js/API/clerk.js"></script>
+</body>
+</html>

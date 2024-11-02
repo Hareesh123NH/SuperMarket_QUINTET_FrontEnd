@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded",function() {
         const password = document.getElementById('password').value;
 
         try {
+
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
-                credentials: 'include' // Include cookies if using session-based authentication.
             });
 
             if (response.ok) {
@@ -25,13 +25,15 @@ document.addEventListener("DOMContentLoaded",function() {
                 const data=await response.json();
                 console.log(data.role+" "+data.userId);
 
-                sessionStorage.setItem("role",data.role);
+                const auth = btoa(`${username}:${password}`);
+
+                sessionStorage.setItem("auth", auth);
                 sessionStorage.setItem("userId",data.userId);
                 
                 switch(data.role){
-                    case "ROLE_USER":window.location.href = 'http://127.0.0.1:5500/pages/customer/customer-dashboard.html';break;
+                    case "ROLE_USER":window.location.href = 'http://127.0.0.1:5500/pages/customer/customer-dash.html';break;
                     case "ROLE_EMPLOYEE":window.location.href = 'http://127.0.0.1:5500/pages/employee/update_inventory.html';break;
-                    case "ROLE_CLERK":window.location.href = 'http://127.0.0.1:5500/pages/clerk/view_orders.html';break;
+                    case "ROLE_CLERK":window.location.href = 'http://127.0.0.1:5500/pages/clerk/clerk-dash.html';break;
                     case "ROLE_MANAGER":window.location.href = 'http://127.0.0.1:5500/pages/manager/admin-dashboard.html';break;
                 }
             } 
