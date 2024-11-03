@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager DashBoard</title>
+    <title>Employee DashBoard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/table.css">
@@ -14,12 +14,12 @@
 
     <!-- Header Section -->
     <header class="bg-primary text-white text-center p-3" style="position: sticky; top: 0; z-index: 1000;">
-        <h1 id="name"> Welcome Manager</h1>
+        <h1 id="name"> Welcome Employee</h1>
         <p>You can perform your oprations</p>
     </header>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 120px;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 120px; z-index: 100;">
         <div class="container">
             <a class="navbar-brand" href="#">Supermarket</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -27,21 +27,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+
                     <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">All Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Clerks</a></li>
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Employees</a></li>
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">All Products</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Add Product</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Bills</a></li>
                     <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="tablediv">
-
-    </div>
-
+    <div class="tablediv"></div>
     <div style="display: none;" id="profile-detail">
         <div class="user-profile">
             <h2>Your Profile</h2>
@@ -72,17 +69,19 @@
     
         </div>
     </div>
+    
     <h2 style="display: none; color: rgb(62, 63, 65); font-style: italic;" id="not" class="tablediv err">No Data Found
     </h2>
+
     <div id="logout-message" style="display: none;">
         <h1 style="text-align: center; color: #7a2424;">
             Goodbye! See you again!
         </h1>
     </div>
     <!-- Embed the page in an iframe -->
-    <iframe id="otherPage" style="display: none;" src="manager.html"></iframe>
+    <iframe id="otherPage" style="display: none;" src="employee.html"></iframe>
 
-    <script src="../../js/API/manager.js"></script>
+    <script src="../../js/API/employee.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/table.css">
 </head>
+
 <body>
 
     <!-- Header Section -->
@@ -25,21 +27,63 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item"><a class="nav-link" href="#about">About</a></li> -->
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Products</a></li>
-                    <li class="nav-item"><a class="nav-link"style="cursor: pointer;">Cart</a></li>
-                    <li class="nav-item"><a class="nav-link"style="cursor: pointer;">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="tablediv">
+
+    </div>
+
+    <div style="display: none;" id="profile-detail">
+        <div class="user-profile">
+            <h2>Your Profile</h2>
+            <div class="profile-detail">
+                <label>Full Name:</label>
+                <span id="fullName">John Doe</span>
+            </div>
+            <div class="profile-detail">
+                <label>Phone Number:</label>
+                <span id="phoneNumber">+1234567890</span>
+            </div>
+            <div class="profile-detail">
+                <label>Address:</label>
+                <span id="address">123 Main Street, Cityville</span>
+            </div>
+            <div class="profile-detail">
+                <label>Email:</label>
+                <span id="email">johndoe@example.com</span>
+            </div>
+            <div class="profile-detail">
+                <label>Username:</label>
+                <span id="username">johndoe</span>
+            </div>
+            <div class="button-group">
+                <button id="updateButton" class="action-button">Update</button>
+                <button id="deleteButton" class="action-button">Delete Account</button>
+            </div>
     
-      </div>
-      <!-- Embed the page in an iframe -->
+        </div>
+    </div>
+
+    <h2 style="display: none; color: rgb(62, 63, 65); font-style: italic;" id="not" class="tablediv err">No Data Found
+    </h2>
+    <div id="logout-message" style="display: none;">
+        <h1 style="text-align: center; color: #7a2424;">
+            Goodbye! See you again!
+        </h1>
+    </div>
+
+    <!-- Embed the page in an iframe -->
     <iframe id="otherPage" style="display: none;" src="customer-orders.html"></iframe>
 
     <script type="module" src="../../js/API/customer.js"></script>
 </body>
+
 </html>

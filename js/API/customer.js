@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const links = document.querySelectorAll(".nav-link");
     var divtable = document.querySelector(".tablediv");
-
+    const message= document.getElementById("logout-message");
+    const userProfileDetails= document.getElementById("profile-detail");
 
     const iframe = document.getElementById("otherPage");
 
@@ -48,6 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     fetchCart(tbody);
                 }
+                else if(btn==="Logout"){
+                    divtable.innerHTML=message.innerHTML;
+                    logout(e.target);
+                }
+                else if (btn === "Profile") {
+                    // fetchProfile();
+                    const details=sessionStorage.getItem("details");
+                    // console.log(details);
+                    setUserValues(details);
+                    divtable.innerHTML = userProfileDetails.innerHTML;
+                }
             });
         });
 
@@ -63,13 +75,66 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+function auth(){
+    const auth = sessionStorage.getItem("auth");
+
+    if (!auth) {
+        // console.error("No authorization token found in session storage.");
+        window.location.href="http://127.0.0.1:5500/index.html";
+        return;
+    }
+
+    fetch(`http://localhost:8080/user/name`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return ;
+            }
+            if (!response.ok) throw new Error("Failed to Authentication");
+            return response.text();
+        })
+        .then(data => console.log(data))
+        .catch(error => console.error("Error to Authentication", error));
+    
+    
+}
+auth();
+
+function logout(logoutButton) {
+    let countdown = 5; // Start countdown at 5 seconds
+    // const logoutButton = document.getElementById("logoutButton");
+    logoutButton.disabled = true; // Disable the logout button
+
+    // Update button text with countdown
+    const intervalId = setInterval(() => {
+        logoutButton.textContent = `Logging out in ${countdown} seconds...`;
+        countdown--;
+
+        if (countdown < 0) {
+            clearInterval(intervalId); // Stop the interval
+
+            // Clear session storage and redirect to index.html
+            sessionStorage.removeItem("auth");
+            sessionStorage.removeItem("userId");
+            window.location.href = 'http://127.0.0.1:5500/index.html';
+        }
+    }, 1000); // Update every second
+}
+
 function fetchProducts(tbody) {
     // Retrieve credentials from session storage
     const auth = sessionStorage.getItem("auth");
 
 
     if (!auth) {
-        console.error("No authorization token found in session storage.");
+        console.error("No authorization token found in session storage.")
+        window.location.href="http://127.0.0.1:5500/index.html";
         return;
     }
     // console.log(auth);
@@ -82,6 +147,10 @@ function fetchProducts(tbody) {
         }
     })
         .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return;
+            }
             if (!response.ok) throw new Error("Failed to fetch products");
             return response.json();
         })
@@ -141,6 +210,15 @@ function fetchOrders(tbody) {
 
 function displayProducts(products, tbody) {
 
+    const err=document.getElementById("not");
+    if(products.length===0){
+         err.style.display="block";
+        return;
+    }
+    else{
+        err.style.display="none";
+    }
+
     tbody.innerHTML = ''; // Clear the table
 
     products.forEach((product, index) => {
@@ -161,6 +239,15 @@ function displayProducts(products, tbody) {
 }
 
 function displayCart(cartItems, tbody) {
+    const err=document.getElementById("not");
+    if(cartItems.length===0){
+         err.style.display="block";
+        return;
+    }
+    else{
+        err.style.display="none";
+    }
+
     tbody.innerHTML = '';
     cartItems.forEach((cart) => {
         // console.log(cart.product);
@@ -179,10 +266,17 @@ function displayCart(cartItems, tbody) {
     })
 }
 
-export function displayOrders(orders, tbody) {
-    // Implement similar logic as displayProducts to show orders
-    // console.log(orders);
+function displayOrders(orders, tbody) {
+    const err=document.getElementById("not");
+    if(orders.length===0){
+         err.style.display="block";
+        return;
+    }
+    else{
+        err.style.display="none";
+    }
     tbody.innerHTML = '';
+    sorting(orders);
     orders.forEach((order) => {
         const item = order.product;
         const isPending = order.orderStatus.toLowerCase() === "pending"; // Check if status is "Pending"
@@ -194,11 +288,23 @@ export function displayOrders(orders, tbody) {
                 <td>${parseInt(order.price / item.price, 10)}</td>
                 <td>${order.price}</td>
                 <td>${order.orderStatus}</td>
-                <td><button class="btn cancel-order" ${isPending ? "" : "disabled"} data-product-id="${order.id}">Cancel</button></td>
+                <td> ${isPending ? `<button class="btn cancel-order" data-product-id="${order.id}">Cancel</button>` : `<i>None</i>`} </td>
             </tr>
         `;
         tbody.innerHTML += row;
     })
+}
+function sorting(orders){
+
+    orders.sort((a, b) => {
+        if (a.orderStatus === "Pending" && b.orderStatus !== "Pending") {
+            return -1; // a comes before b
+        }
+        if (a.orderStatus !== "Pending" && b.orderStatus === "Pending") {
+            return 1; // b comes before a
+        }
+        return b.id - a.id;
+    });
 }
 
 document.addEventListener("click", (e) => {
@@ -253,6 +359,7 @@ document.addEventListener("click", (e) => {
             console.error("User ID or Product ID is missing.");
         }
     }
+    
 
 
 });
@@ -378,4 +485,29 @@ function cancelOrder(orderId) {
             fetchOrders(tbody);
         })
         .catch(error => console.error("Error cancel the Order", error));
+}
+
+function setUserValues(userString) {
+    // Regular expressions to extract values
+    const userIdMatch = userString.match(/id=(\d+)/);
+    const usernameMatch = userString.match(/username='([^']+)'/);
+    const fullNameMatch = userString.match(/fullName='([^']+)'/);
+    const phoneNumberMatch = userString.match(/phoneNumber='([^']+)'/);
+    const addressMatch = userString.match(/Address='([^']+)'/);
+    const emailMatch = userString.match(/email='([^']+)'/);
+
+    // Extract values using the matches
+    const userId = userIdMatch ? userIdMatch[1] : null;
+    const username = usernameMatch ? usernameMatch[1] : null;
+    const fullName = fullNameMatch ? fullNameMatch[1] : null;
+    const phoneNumber = phoneNumberMatch ? phoneNumberMatch[1] : null;
+    const address = addressMatch ? addressMatch[1] : null;
+    const email = emailMatch ? emailMatch[1] : null;
+
+    // Set the values in the HTML elements
+    document.getElementById("fullName").textContent = fullName;
+    document.getElementById("phoneNumber").textContent = phoneNumber;
+    document.getElementById("address").textContent = address;
+    document.getElementById("email").textContent = email;
+    document.getElementById("username").textContent = username;
 }

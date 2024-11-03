@@ -29,13 +29,17 @@ document.addEventListener("DOMContentLoaded",function() {
 
                 sessionStorage.setItem("auth", auth);
                 sessionStorage.setItem("userId",data.userId);
+                sessionStorage.setItem("details",data.details);
                 
                 switch(data.role){
                     case "ROLE_USER":window.location.href = 'http://127.0.0.1:5500/pages/customer/customer-dash.html';break;
-                    case "ROLE_EMPLOYEE":window.location.href = 'http://127.0.0.1:5500/pages/employee/update_inventory.html';break;
+                    case "ROLE_EMPLOYEE":window.location.href = 'http://127.0.0.1:5500/pages/employee/employee-dash.html';break;
                     case "ROLE_CLERK":window.location.href = 'http://127.0.0.1:5500/pages/clerk/clerk-dash.html';break;
                     case "ROLE_MANAGER":window.location.href = 'http://127.0.0.1:5500/pages/manager/manager-dash.html';break;
                 }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             } 
             else {
                 const errorText = await response.text();
@@ -81,3 +85,5 @@ document.addEventListener("DOMContentLoaded",function() {
     });
     
 });
+
+

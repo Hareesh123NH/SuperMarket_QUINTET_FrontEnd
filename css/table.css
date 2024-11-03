@@ -35,3 +35,73 @@
 .hiddenForm{
     display: none;
 }
+
+
+/* Base styles for the user profile */
+.user-profile {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white; /* Text color that contrasts with the background */
+    padding: 20px; /* Padding around the profile content */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 400px; /* Set a maximum width for the profile */
+    margin: 20px auto; /* Center the profile on the page */
+}
+
+/* Styles for each profile detail */
+.profile-detail {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between label and value */
+    margin-bottom: 15px; /* Space between each detail */
+}
+
+/* Label styles */
+.profile-detail label {
+    font-weight: bold; /* Make labels bold */
+}
+
+/* Styles for the value spans */
+.profile-detail span {
+    font-size: 1rem; /* Set font size for the values */
+}
+
+/* Button group styles */
+.button-group {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+/* General button styles */
+.action-button {
+    background-color: #28a745; /* Bootstrap success color for update */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for buttons */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s; /* Transition for hover effect */
+    flex: 1; /* Allow buttons to grow */
+    margin-right: 10px; /* Space between buttons */
+}
+
+/* Remove margin for the last button */
+.action-button:last-child {
+    margin-right: 0; /* Remove right margin on last button */
+}
+
+/* Hover effect for buttons */
+.action-button:hover {
+    background-color: #218838; /* Darker green for hover */
+}
+
+/* Styles for delete button */
+#deleteButton {
+    background-color: #dc3545; /* Bootstrap danger color for delete */
+}
+
+#deleteButton:hover {
+    background-color: #c82333; /* Darker red for hover */
+}
+
+

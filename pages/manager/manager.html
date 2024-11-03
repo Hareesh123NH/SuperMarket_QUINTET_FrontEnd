@@ -50,7 +50,8 @@
             </div>
             <div class="hiddenForm">
 
-                <form id="userForm">
+                <form id="userForm" onsubmit="handleUpdate(event)" >
+                    <input type="hidden" id="profileId" name="profileId">
                     <div>
                         <label for="fullName">Full Name:</label>
                         <input type="text" id="fullName" name="fullName" required>
@@ -67,8 +68,8 @@
                         <label for="address">Address:</label>
                         <input type="text" id="address" name="address" required>
                     </div>
-                    <button type="submit">Submit</button>
-                    <button type="button" class="cancel" id="cancelButton">Cancel</button>
+                    <button class="updateSubmit">Submit</button>
+                    <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
                 </form>
 
             </div>
@@ -96,7 +97,8 @@
             </div>
             <div class="hiddenForm">
 
-                <form id="userForm">
+                <form id="userForm" onsubmit="handleUpdate(event)" >
+                    <input type="hidden" id="profileId" name="profileId">
                     <div>
                         <label for="fullName">Full Name:</label>
                         <input type="text" id="fullName" name="fullName" required>
@@ -113,7 +115,7 @@
                         <label for="address">Address:</label>
                         <input type="text" id="address" name="address" required>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button class="updateSubmit">Submit</button>
                     <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
                 </form>
 

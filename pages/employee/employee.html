@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+</head>
+
+<body>
+    <div id="allProducts">
+        <h2>All Products</h2>
+        <div class="adjust">
+            <div class="table-container">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price($)</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table">
+                        <!-- Table rows here -->
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="hiddenForm">
+
+                <form id="productForm" onsubmit="handleUpdate(event)">
+                    <input type="hidden" id="productId" name="productId">
+                    <div>
+                        <label for="name">Product Name:</label>
+                        <input type="text" id="productname" name="name" required>
+                    </div>
+                    <div>
+                        <label for="category">Category:</label>
+                        <input type="text" id="category" name="category" required>
+                    </div>
+                    <div>
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" required min="0">
+                    </div>
+                    <div>
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price" required min="0">
+                    </div>
+                    <button class="updateSubmit">Submit</button>
+                    <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="register">
+        <h2>Add Product</h2>
+        <form id="userForm" onsubmit="handleSubmit(event)">
+            <div>
+                <label for="name">Product Name:</label>
+                <input type="text" id="productname" name="name" required>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required>
+            </div>
+            <div>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required min="0">
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" required min="0">
+            </div>
+            <button class="registerSubmit">Submit</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
