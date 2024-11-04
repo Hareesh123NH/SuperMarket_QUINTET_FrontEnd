@@ -107,7 +107,7 @@ function auth(){
 auth();
 
 function logout(logoutButton) {
-    let countdown = 5; // Start countdown at 5 seconds
+    let countdown = 3; // Start countdown at 5 seconds
     // const logoutButton = document.getElementById("logoutButton");
     logoutButton.disabled = true; // Disable the logout button
 
@@ -228,8 +228,8 @@ function displayProducts(products, tbody) {
                 <td scope="row">${product.name}</td>
                 <td>${product.category}</td>
                 <td>${product.price}</td>
-                <td><button class="btn add-to-cart" data-product-id="${product.id}">AddToCart</button>
-                    <button class="btn buy-product" data-product-id="${product.id}" data-product-price="${product.price}" 
+                <td><button class="add-to-cart" data-product-id="${product.id}">AddToCart</button>
+                    <button class="buy-product" data-product-id="${product.id}" data-product-price="${product.price}" 
                         data-product-quantity="${product.quantity}">Buy</button>
                 </td>
             </tr>
@@ -242,7 +242,6 @@ function displayCart(cartItems, tbody) {
     const err=document.getElementById("not");
     if(cartItems.length===0){
          err.style.display="block";
-        return;
     }
     else{
         err.style.display="none";
@@ -257,8 +256,8 @@ function displayCart(cartItems, tbody) {
             <td scope="row">${item.name}</td>
             <td>${item.category}</td>
             <td>${item.price}</td>
-            <td><button class="btn remove-product" data-product-id="${item.id}">Remove</button>
-                <button class="btn buy-product" data-product-id="${item.id}" data-product-price="${item.price}"
+            <td><button class="remove-product" data-product-id="${item.id}">Remove</button>
+                <button class="buy-product" data-product-id="${item.id}" data-product-price="${item.price}"
                      data-product-quantity="${item.quantity}">Buy</button></td>
         </tr>
     `;
@@ -285,10 +284,10 @@ function displayOrders(orders, tbody) {
             <tr>
                 <td scope="row">${item.name}</td>
                 <td>${item.category}</td>
-                <td>${parseInt(order.price / item.price, 10)}</td>
+                <td>${order.quantity}</td>
                 <td>${order.price}</td>
                 <td>${order.orderStatus}</td>
-                <td> ${isPending ? `<button class="btn cancel-order" data-product-id="${order.id}">Cancel</button>` : `<i>None</i>`} </td>
+                <td> ${isPending ? `<button class="cancel-order" data-product-id="${order.id}">Cancel</button>` : `<i>None</i>`} </td>
             </tr>
         `;
         tbody.innerHTML += row;
@@ -343,8 +342,9 @@ document.addEventListener("click", (e) => {
             return;
         }
         price = price * count;
-        if (userId && productId && price) {
-            addToOrders(userId, productId, price);
+        console.log(price);
+        if (userId && productId && count) {
+            addToOrders(userId, productId, count);
         } else {
             console.error("User ID or Product ID is missing.");
         }
@@ -360,7 +360,6 @@ document.addEventListener("click", (e) => {
         }
     }
     
-
 
 });
 
@@ -389,6 +388,7 @@ function addToCart(userId, productId) {
         })
         .then(data => {
             console.log("Product added to cart:", data);
+            alert("Product added to cart Successfully");
             // Optionally, update the cart UI here if needed
         })
         .catch(error => console.error("Error adding product to cart:", error));
@@ -424,15 +424,15 @@ function removeFromCart(userId, productId) {
         .catch(error => console.error("Error adding product to cart:", error));
 }
 
-function addToOrders(userId, productId, price) {
+function addToOrders(userId, productId, count) {
     const auth = sessionStorage.getItem("auth");
 
     if (!auth) {
         console.error("No authorization token found in session storage.");
         return;
     }
-
-    fetch(`http://localhost:8080/user/addToOrders/${userId}&${productId}&${price}`, {
+    console.log(typeof(count));
+    fetch(`http://localhost:8080/user/addToOrders/${userId}&${productId}&${count}`, {
         method: 'POST',
         headers: {
             "Authorization": `Basic ${auth}`,

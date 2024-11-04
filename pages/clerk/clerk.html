@@ -5,68 +5,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clerk Tables</title>
+
 </head>
 
 <body>
     <div id="all-orders">
         <h1>All Orders</h1>
         <div class="table-container">
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price($)</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="table">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price($)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </div>
     </div>
     <div id="pending-orders">
         <h1>Pending Orders</h1>
         <div class="table-container">
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price($)</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="table">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price($)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <div id="approved-orders">
         <h1>Approved Orders</h1>
         <div class="table-container">
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price($)</th>
-                    <th scope="col">Status</th>
-                    <!-- <th scope="col">Actions</th> -->
-                </tr>
-            </thead>
-            <tbody id="table">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price($)</th>
+                        <th scope="col">Status</th>
+                        <!-- <th scope="col">Actions</th> -->
+                    </tr>
+                </thead>
+                <tbody id="table">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    
+    <div id="generateBill">
+        <h1>Shopping Website</h1>
+        <div>
+            <label for="customerName">Customer Name:</label>
+            <input type="text" id="customerName" required>
+            <button onclick="generateBill(event)">Generate Bill</button>
+        </div>
+
+        <div class="bill-container" id="billContainer">
+            <div class="bill-header">
+                <h2>Invoice</h2>
+                <p>Customer Name: <span id="billCustomerName"></span></p>
+                <p>Transaction ID: <span id="transactionId"></span></p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Product Price</th>
+                    </tr>
+                </thead>
+                <tbody id="billItems">
+                    <!-- Rows will be added dynamically here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="total">Total Price</td>
+                        <td id="totalPrice"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="total">GST (18%)</td>
+                        <td id="gstAmount"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="total">Payable Amount</td>
+                        <td id="payableAmount"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+        <br>
+        <div class="bill-actions">
+            <button onclick="postBill(event)" id="bill-orders">Post</button>
+            <button onclick="printBill()">Print</button>
+            <button class="cancel-bill">Cancel</button>
         </div>
     </div>
 
@@ -74,21 +131,21 @@
     <div id="cancel-orders">
         <h1>Cancel Orders</h1>
         <div class="table-container">
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price($)</th>
-                    <th scope="col">Status</th>
-                    <!-- <th scope="col">Actions</th> -->
-                </tr>
-            </thead>
-            <tbody id="table">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price($)</th>
+                        <th scope="col">Status</th>
+                        <!-- <th scope="col">Actions</th> -->
+                    </tr>
+                </thead>
+                <tbody id="table">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

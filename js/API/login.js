@@ -1,5 +1,4 @@
 
-
 document.addEventListener("DOMContentLoaded",function() {
     const loginForm = document.getElementById("loginForm");
 
@@ -42,8 +41,8 @@ document.addEventListener("DOMContentLoaded",function() {
                 }, 1000);
             } 
             else {
-                const errorText = await response.text();
-                document.getElementById('error-message').textContent = errorText;
+                const errorText = await response.json();
+                document.getElementById('error-message').textContent = errorText.message;
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -56,8 +55,13 @@ document.addEventListener("DOMContentLoaded",function() {
         event.preventDefault();
     
         
-        const name = document.getElementById('username1').value;
+        const username = document.getElementById('username1').value;
         const password = document.getElementById('password1').value;
+        const fullName = document.getElementById("fullName").value;
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const email = document.getElementById("email").value;
+        const address = document.getElementById("address").value;
+
 
         try {
             const res = await fetch('http://localhost:8080/auth/register', {
@@ -65,12 +69,12 @@ document.addEventListener("DOMContentLoaded",function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, password }),
+                body: JSON.stringify({ username, password ,fullName,phoneNumber,email,address}),
                 credentials: 'include'
             });
     
             if (res.status===201) {
-                console.log('Registration successful:', res);
+                console.log('Registration successfull:', res);
                 window.location.href = 'http://127.0.0.1:5500/index.html';
                  // Redirect if needed
             } else {

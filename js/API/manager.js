@@ -36,14 +36,14 @@ function auth(){
 }
 auth();
 
-function logout(logoutButton) {
+function logout(logoutButton,bool) {
     let countdown = 5; // Start countdown at 5 seconds
     // const logoutButton = document.getElementById("logoutButton");
     logoutButton.disabled = true; // Disable the logout button
 
     // Update button text with countdown
     const intervalId = setInterval(() => {
-        logoutButton.textContent = `Logging out in ${countdown} seconds...`;
+        logoutButton.textContent = (bool)?`Deleting in ${countdown} seconds`:`Logging out in ${countdown} seconds...`;
         countdown--;
 
         if (countdown < 0) {
@@ -106,7 +106,7 @@ iframe.onload = () => {
 
             else if(btn==="Logout"){
                 divtable.innerHTML=message.innerHTML;
-                logout(e.target);
+                logout(e.target,false);
             }
         });
     });
@@ -148,6 +148,10 @@ document.addEventListener("click", (e) => {
         if(isOk){
             fetchRemove(profileId,fullName);
         }
+    }
+
+    if(e.target.id==="deleteButton"){
+        deleteUser(e.target);
     }
 
 
@@ -413,8 +417,8 @@ function displayWorkers(workers,tbody){
                 <td>${user.phoneNumber}</td>
                 <td>${user.email}</td>
                 <td>${user.address}</td>
-                <td><button class="btn update" data-worker='${userData.replace(/'/g, "\\'")}'>Update</button>
-                    <button class="btn remove" data-worker-id='${user.id}' data-worker-name='${user.fullName}'>Remove</button></td>
+                <td><button class="update" data-worker='${userData.replace(/'/g, "\\'")}'>Update</button>
+                    <button class="remove" data-worker-id='${user.id}' data-worker-name='${user.fullName}'>Remove</button></td>
             </tr>
         `;
         tbody.innerHTML += row;
@@ -489,4 +493,31 @@ function setUserValues(userString) {
     document.getElementById("address").textContent = address;
     document.getElementById("email").textContent = email;
     document.getElementById("username").textContent = username;
+}
+
+function deleteUser(btn) {
+    const auth = sessionStorage.getItem("auth");
+   const userId=parseInt(sessionStorage.getItem("userId"));
+    console.log(typeof(userId)+" "+userId);
+    if (!auth) {
+        console.error("No authorization token found in session storage.");
+        return;
+    }
+
+    fetch(`http://localhost:8080/manager/delete/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to Delete the User");
+        })
+        .then(data => {
+            console.log("Deleted", data);
+            // Optionally, update the cart UI here if needed
+            logout(btn,true);
+        })
+        .catch(error => console.error("Error Deleting user", error));
 }

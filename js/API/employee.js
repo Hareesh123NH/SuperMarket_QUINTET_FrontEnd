@@ -56,8 +56,8 @@ function logout(logoutButton) {
 
 const links = document.querySelectorAll(".nav-link");
 var divtable = document.querySelector(".tablediv");
-const message= document.getElementById("logout-message");
-const userProfileDetails= document.getElementById("profile-detail");
+const message = document.getElementById("logout-message");
+const userProfileDetails = document.getElementById("profile-detail");
 
 // console.log(userProfileDetails);
 const iframe = document.getElementById("otherPage");
@@ -66,6 +66,7 @@ iframe.onload = () => {
 
     const allProducts = iframe.contentDocument.getElementById("allProducts");
     const register = iframe.contentDocument.getElementById("register");
+    const bills = iframe.contentDocument.getElementById("bills");
 
     links.forEach((link) => {
 
@@ -82,14 +83,14 @@ iframe.onload = () => {
             }
             else if (btn === "Profile") {
                 // fetchProfile();
-                const details=sessionStorage.getItem("details");
+                const details = sessionStorage.getItem("details");
                 // console.log(details);
                 setUserValues(details);
                 divtable.innerHTML = userProfileDetails.innerHTML;
             }
             else if (btn === "Logout") {
                 // console.log(btn);
-                divtable.innerHTML=message.innerHTML;
+                divtable.innerHTML = message.innerHTML;
                 logout(e.target);
             }
 
@@ -97,6 +98,12 @@ iframe.onload = () => {
                 divtable.innerHTML = register.innerHTML;
                 const tbody = document.getElementById("table");
                 // fetchOrders(tbody);
+            }
+
+            else if (btn === "Bills") {
+                divtable.innerHTML = bills.innerHTML;
+                const tbody = document.getElementById("table");
+                fetchBills(tbody);
             }
         });
     });
@@ -262,7 +269,7 @@ function displayProducts(products, tbody) {
                 <td>${product.category}</td>
                 <td>${product.quantity}</td>
                 <td>${product.price}</td>
-                <td><button class="btn update" data-product='${productData.replace(/'/g, "\\'")}'>Update</button></td>
+                <td><button class="update" data-product='${productData.replace(/'/g, "\\'")}'>Update</button></td>
             </tr>
         `;
         tbody.innerHTML += row;
@@ -365,4 +372,50 @@ function fetchRemoveProduct(productId, pname) {
             console.error("Error:", error);
             alert("There was an error Removing the Product.");
         });
+}
+
+function fetchBills(tbody) {
+    const auth = sessionStorage.getItem("auth");
+
+    if (!auth) {
+        console.error("No authorization token found in session storage.");
+        return;
+    }
+
+    fetch('http://localhost:8080/emp/allBills', {
+        method: "GET",
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            'Content-Type': "application/json"
+        },
+    })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to get Bills");
+            return res.json();
+        })
+        .then((data) => {
+            displayBills(data, tbody);
+        })
+        .catch(error => console.error("Error Fetching Bills", error));
+}
+
+function displayBills(bills, tbody) {
+    tbody.innerHTML = '';
+
+    bills.forEach((bill) => {
+
+        const billData = JSON.stringify(bill);
+        const row = `
+            <tr>
+                <td scope="row">${bill.customerName}</td>
+                <td>${bill.transactionId}</td>
+                <td>${bill.totalPrice}</td>
+                <td>${bill.gstAmount}</td>
+                <td>${bill.payableAmount}</td>
+                <td><button class="view-bill" data-product='${billData.replace(/'/g, "\\'")}'>View Bill</button></td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+        // <button class="btn remove" data-product-id='${product.id}' data-product-name='${product.name}' data-product-quantity='${product.quantity}'>Remove</button>
+    })
 }

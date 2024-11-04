@@ -1,0 +1,19 @@
+.bill-container {
+    display: none;
+    border: 1px solid #333;
+    padding: 20px;
+    width: 500px;
+    margin-top: 20px;
+}
+.bill-header, .bill-footer {
+    text-align: center;
+    font-weight: bold;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.total {
+    font-weight: bold;
+}
