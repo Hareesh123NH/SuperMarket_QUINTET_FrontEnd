@@ -85,71 +85,74 @@
 
     <div id="bills">
         <h1>Order Bills</h1>
-        <div class="table-container">
-            <table class="table table-success table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Customer Name</th>
-                        <th scope="col">TransactionId</th>
-                        <th scope="col">Total Amount</th>
-                        <th scope="col">GST Amount</th>
-                        <th scope="col">Payable Amount</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="table">
+        <div class="adjust">
+            <div class="table-container">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">TransactionId</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">GST Amount</th>
+                            <th scope="col">Payable Amount</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table">
 
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-    <div id="viewBill">
-        <div class="bill-container" id="billContainer">
-            <div class="bill-header">
-                <h2>Invoice</h2>
-                <p>Customer Name: <span id="billCustomerName"></span></p>
-                <p>Transaction ID: <span id="transactionId"></span></p>
+                    </tbody>
+                </table>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Product Price</th>
-                    </tr>
-                </thead>
-                <tbody id="billItems">
-                    <!-- Rows will be added dynamically here -->
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5" class="total">Total Price</td>
-                        <td id="totalPrice"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="total">GST (18%)</td>
-                        <td id="gstAmount"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="total">Payable Amount</td>
-                        <td id="payableAmount"></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div id="viewBill" style="display: none;">
+                <div class="bill-container" id="billContainer">
+                    <div class="bill-header">
+                        <h2>Invoice</h2>
+                        <p>Customer Name: <span id="billCustomerName"></span></p>
+                        <p>Transaction ID: <span id="transactionId"></span></p>
+                    </div>
 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Product Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billItems">
+                            <!-- Rows will be added dynamically here -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="total">Total Price</td>
+                                <td id="totalPrice"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="total">GST (18%)</td>
+                                <td id="gstAmount"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="total">Payable Amount</td>
+                                <td id="payableAmount"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <br>
+                <div class="bill-actions">
+                    <button onclick="printBill()">Print</button>
+                    <button class="done-bill">Done</button>
+                </div>
+            </div>
         </div>
-        <br>
-        <div class="bill-actions">
-            <button onclick="printBill()">Print</button>
-            <button class="cancel-bill">Cancel</button>
-        </div>
+
     </div>
+
 
 </body>
 

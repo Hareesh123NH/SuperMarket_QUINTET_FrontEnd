@@ -323,7 +323,7 @@ function displayOrders(orders,tbody){
                 <td scope="row">${user.userProfile.fullName}</td>
                 <td>${user.userProfile.phoneNumber}</td>
                 <td>${item.name}</td>
-                <td>${parseInt(order.price / item.price, 10)}</td>
+                <td>${order.quantity}</td>
                 <td>${order.price}</td>
             </tr>
         `;

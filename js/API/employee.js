@@ -165,16 +165,46 @@ document.addEventListener("click", (e) => {
         form.style.display = "none";
     }
 
-    // if(e.target.classList.contains("remove")){
-    //     const pname=e.target.getAttribute("data-product-name");
-    //     const quantity=e.target.getAttribute("data-product-quantity");
-    //     const isOk=confirm(`Do you really want remove ${pname}?\nStill You have ${quantity} Quantities!`);
-    //     const productId=e.target.getAttribute("data-product-id");
-    //     // console.log(isOk);
-    //     if(isOk){
-    //         fetchRemoveProduct(productId,pname);
-    //     }
-    // }
+    if (e.target.classList.contains("done-bill")) {
+        const billdiv = document.getElementById("viewBill");
+        billdiv.style.display = "none";
+    }
+
+
+    if (e.target.classList.contains("view-bill")) {
+
+        const billData = e.target.getAttribute("data-bill");
+        const billdiv = document.getElementById("viewBill");
+        const bill = JSON.parse(billData);
+
+        billdiv.style.display = "block";
+
+        const billItemsContainer = document.getElementById("billItems");
+        billItemsContainer.innerHTML = ""; // Clear any existing rows
+        
+        const products=bill.billProducts;
+    
+        products.forEach((product, index) => {
+    
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${product.pName}</td>
+                    <td>${product.category}</td>
+                    <td>${product.quantity}</td>
+                    <td>${product.unitPrice}</td>
+                    <td>${product.productPrice.toFixed(2)}</td>
+                `;
+            billItemsContainer.appendChild(row);
+        });
+
+        document.getElementById("billCustomerName").innerText = bill.customerName;
+        document.getElementById("transactionId").innerText = bill.transactionId;
+        document.getElementById("totalPrice").innerText = bill.totalPrice.toFixed(2);
+        document.getElementById("gstAmount").innerText = bill.gstAmount;
+        document.getElementById("payableAmount").innerText = bill.payableAmount;
+        document.getElementById("billContainer").style.display = "block";
+    }
 
 
 });
@@ -401,6 +431,7 @@ function fetchBills(tbody) {
 
 function displayBills(bills, tbody) {
     tbody.innerHTML = '';
+    bills.sort((a,b)=>b.id-a.id);
 
     bills.forEach((bill) => {
 
@@ -412,10 +443,21 @@ function displayBills(bills, tbody) {
                 <td>${bill.totalPrice}</td>
                 <td>${bill.gstAmount}</td>
                 <td>${bill.payableAmount}</td>
-                <td><button class="view-bill" data-product='${billData.replace(/'/g, "\\'")}'>View Bill</button></td>
+                <td><button class="view-bill" data-bill='${billData.replace(/'/g, "\\'")}'>View Bill</button></td>
             </tr>
         `;
         tbody.innerHTML += row;
         // <button class="btn remove" data-product-id='${product.id}' data-product-name='${product.name}' data-product-quantity='${product.quantity}'>Remove</button>
     })
 }
+
+function printBill() {
+    const billContent = document.getElementById("billContainer").innerHTML;
+    const originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = billContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+}
+
+
