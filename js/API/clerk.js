@@ -96,6 +96,7 @@ iframe.onload = () => {
                 divtable.innerHTML = allorders.innerHTML;
                 const tbody = document.getElementById("table");
                 fetchOrders(tbody);
+                searchOrders(tbody);
             }
             else if (btn === "Profile") {
                 // fetchProfile();
@@ -119,6 +120,7 @@ iframe.onload = () => {
     const tbody = document.getElementById("table");
     // console.log(tbody);
     fetchOrders(tbody);
+    searchOrders(tbody);
 
 }
 
@@ -154,7 +156,7 @@ document.addEventListener("click", (e) => {
         divtable.innerHTML = bill.innerHTML;
         generateBill(userName, orders);
 
-        console.log(userId, userName);
+        // console.log(userId, userName);
 
     }
 
@@ -180,6 +182,24 @@ document.addEventListener("click", (e) => {
     }
 
 });
+
+function searchOrders(tbody){
+
+    const input=document.getElementById("search");
+    input.addEventListener("input",(e)=>{
+        const search=e.target.value;
+        // const products=JSON.parse("[]");  
+        if(search.length!==0){
+            // console.log(search);
+            fetchSearch(tbody,search);
+        }
+        else{
+            fetchOrders(tbody);
+        }
+    });
+}
+
+
 
 function approvedOrder(orderId) {
     const auth = sessionStorage.getItem("auth");
@@ -278,6 +298,38 @@ function fetchOrders(tbody) {
         .catch(error => console.error("Error fetching orders:", error));
 }
 
+function fetchSearch(tbody,search) {
+    // Retrieve credentials from session storage
+    const auth = sessionStorage.getItem("auth");
+
+
+    if (!auth) {
+        console.error("No authorization token found in session storage.")
+        window.location.href="http://127.0.0.1:5500/index.html";
+        return;
+    }
+    // console.log(auth);
+
+
+    fetch(`http://localhost:8080/clerk/searchOrders/${search}`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return;
+            }
+            if (!response.ok) throw new Error("Failed to fetch products");
+            return response.json();
+        })
+        .then(data => displayOrders(data, tbody))
+        .catch(error => console.error("Error fetching products:", error));
+}
+
 function displayOrders(orders, tbody) {
     const err = document.getElementById("not");
     if (orders.length === 0) {
@@ -309,6 +361,7 @@ function displayOrders(orders, tbody) {
 
         const row = `
             <tr>
+                <td>${order.user.userProfile.fullName}-(${order.user.id})</td>
                 <td scope="row">${item.name}</td>
                 <td>${item.category}</td>
                 <td>${order.quantity}</td>
@@ -335,6 +388,7 @@ function displayApproved(orders, tbody) {
     }
 
     tbody.innerHTML = '';
+    // console.log(orders);
 
     // Group orders by user ID
     const ordersByUser = orders.reduce((acc, order) => {
@@ -357,7 +411,7 @@ function displayApproved(orders, tbody) {
 
         tbody.innerHTML += `
         <tr>
-            <th colspan="4">User: - ${user.userProfile.fullName}</th>
+            <th colspan="4">Customer: - ${user.userProfile.fullName}</th>
              ${tab === "Approved Orders" ? `<th><button class="generate-bill" data-user-id="${user.id}"
                                                 data-user-name="${user.userProfile.fullName}"
                                                 data-user-orders='${JSON.stringify(orders)}' >Generate Bill</button></th>` :

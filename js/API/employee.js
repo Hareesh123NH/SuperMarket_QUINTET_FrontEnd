@@ -59,7 +59,6 @@ var divtable = document.querySelector(".tablediv");
 const message = document.getElementById("logout-message");
 const userProfileDetails = document.getElementById("profile-detail");
 
-// console.log(userProfileDetails);
 const iframe = document.getElementById("otherPage");
 
 iframe.onload = () => {
@@ -80,6 +79,7 @@ iframe.onload = () => {
                 divtable.innerHTML = allProducts.innerHTML;
                 const tbody = document.getElementById("table");
                 fetchAllProducts(tbody);
+                searchProducts(tbody);
             }
             else if (btn === "Profile") {
                 // fetchProfile();
@@ -104,6 +104,7 @@ iframe.onload = () => {
                 divtable.innerHTML = bills.innerHTML;
                 const tbody = document.getElementById("table");
                 fetchBills(tbody);
+                searchBills(tbody);
             }
         });
     });
@@ -114,6 +115,7 @@ iframe.onload = () => {
     const tbody = document.getElementById("table");
     // console.log(tbody);
     fetchAllProducts(tbody);
+    searchProducts(tbody);
 }
 
 function setUserValues(userString) {
@@ -176,6 +178,7 @@ document.addEventListener("click", (e) => {
         const billData = e.target.getAttribute("data-bill");
         const billdiv = document.getElementById("viewBill");
         const bill = JSON.parse(billData);
+        e.target.innerText="Viewed";
 
         billdiv.style.display = "block";
 
@@ -285,6 +288,102 @@ function fetchAllProducts(tbody) {
         })
         .catch(error => console.error("Error Fetching products", error));
 
+}
+
+function searchProducts(tbody){
+
+    const input=document.getElementById("search");
+    input.addEventListener("input",(e)=>{
+        const search=e.target.value;
+        // const products=JSON.parse("[]");  
+        if(search.length!==0){
+            // console.log(search);
+            fetchSearchProducts(tbody,search);
+        }
+        else{
+            fetchAllProducts(tbody);
+        }
+    });
+}
+
+function searchBills(tbody){
+
+    const input=document.getElementById("search");
+    input.addEventListener("input",(e)=>{
+        const search=e.target.value;
+        // const products=JSON.parse("[]");  
+        if(search.length!==0){
+            // console.log(search);
+            fetchSearchBills(tbody,search);
+        }
+        else{
+            fetchBills(tbody);
+        }
+    });
+}
+
+function fetchSearchProducts(tbody,search) {
+    // Retrieve credentials from session storage
+    const auth = sessionStorage.getItem("auth");
+
+
+    if (!auth) {
+        console.error("No authorization token found in session storage.")
+        window.location.href="http://127.0.0.1:5500/index.html";
+        return;
+    }
+    // console.log(auth);
+
+
+    fetch(`http://localhost:8080/emp/searchProducts/${search}`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return;
+            }
+            if (!response.ok) throw new Error("Failed to fetch products");
+            return response.json();
+        })
+        .then(data => displayProducts(data, tbody))
+        .catch(error => console.error("Error fetching products:", error));
+}
+
+function fetchSearchBills(tbody,search) {
+    // Retrieve credentials from session storage
+    const auth = sessionStorage.getItem("auth");
+
+
+    if (!auth) {
+        console.error("No authorization token found in session storage.")
+        window.location.href="http://127.0.0.1:5500/index.html";
+        return;
+    }
+    // console.log(auth);
+
+
+    fetch(`http://localhost:8080/emp/searchBills/${search}`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return;
+            }
+            if (!response.ok) throw new Error("Failed to fetch products");
+            return response.json();
+        })
+        .then(data => displayBills(data, tbody))
+        .catch(error => console.error("Error fetching products:", error));
 }
 
 function displayProducts(products, tbody) {

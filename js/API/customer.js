@@ -27,8 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     temp.innerHTML = products.innerHTML;
 
                     const tbody = document.getElementById("table");
-
+                    
                     fetchProducts(tbody);
+                    searchProducts(tbody);
 
                 }
                 else if (btn === "Orders") {
@@ -69,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const tbody = document.getElementById("table");
         fetchProducts(tbody);
+        searchProducts(tbody);
     };
 
 
@@ -139,7 +141,40 @@ function fetchProducts(tbody) {
     }
     // console.log(auth);
 
+
     fetch('http://localhost:8080/user/getProducts', {
+        method: 'GET',
+        headers: {
+            "Authorization": `Basic ${auth}`,
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if(response.status==403){
+                window.location.href="http://127.0.0.1:5500/index.html";
+                return;
+            }
+            if (!response.ok) throw new Error("Failed to fetch products");
+            return response.json();
+        })
+        .then(data => displayProducts(data, tbody))
+        .catch(error => console.error("Error fetching products:", error));
+}
+
+function fetchSearch(tbody,search) {
+    // Retrieve credentials from session storage
+    const auth = sessionStorage.getItem("auth");
+
+
+    if (!auth) {
+        console.error("No authorization token found in session storage.")
+        window.location.href="http://127.0.0.1:5500/index.html";
+        return;
+    }
+    // console.log(auth);
+
+
+    fetch(`http://localhost:8080/user/searchProducts/${search}`, {
         method: 'GET',
         headers: {
             "Authorization": `Basic ${auth}`,
@@ -208,18 +243,37 @@ function fetchOrders(tbody) {
         .catch(error => console.error("Error fetching orders:", error));
 }
 
+function searchProducts(tbody){
+
+    const input=document.getElementById("search");
+    input.addEventListener("input",(e)=>{
+        const search=e.target.value;
+        // const products=JSON.parse("[]");  
+        if(search.length!==0){
+            // console.log(search);
+            fetchSearch(tbody,search);
+        }
+        else{
+            fetchProducts(tbody);
+        }
+    });
+}
+
 function displayProducts(products, tbody) {
 
+    tbody.innerHTML = ''; 
     const err=document.getElementById("not");
+
     if(products.length===0){
-         err.style.display="block";
+        err.style.display="block";
+
         return;
     }
     else{
         err.style.display="none";
     }
-
-    tbody.innerHTML = ''; // Clear the table
+    
+    // Clear the table
 
     products.forEach((product, index) => {
 
@@ -274,6 +328,8 @@ function displayOrders(orders, tbody) {
     else{
         err.style.display="none";
     }
+
+
     tbody.innerHTML = '';
     sorting(orders);
     orders.forEach((order) => {
@@ -363,6 +419,10 @@ document.addEventListener("click", (e) => {
 
 });
 
+// function handleSearchChange(event) {
+//     console.log("Search input changed:", event.target.value);
+//     // Add your custom logic here
+// }
 
 function addToCart(userId, productId) {
     const auth = sessionStorage.getItem("auth");

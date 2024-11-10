@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded",function() {
     
             if (res.status===201) {
                 console.log('Registration successfull:', res);
+                alert("Registration successfull");
                 window.location.href = 'http://127.0.0.1:5500/index.html';
                  // Redirect if needed
             } else {
